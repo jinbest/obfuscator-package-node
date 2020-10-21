@@ -94,6 +94,7 @@ function EncryptHandle() {
     let option = (document.getElementById("Combined").checked) ? "combined" : "seperated";
     let transformOption = {
         stringArray: document.getElementById("stringArray").checked,
+        selfDefending: document.getElementById("selfDefending").checked,
         rotateStringArray: document.getElementById("rotateStringArray").checked,
         shuffleStringArray: document.getElementById("shuffleStringArray").checked,
         splitStrings: document.getElementById("splitStrings").checked,

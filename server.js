@@ -27,6 +27,7 @@ app.post("/api/data", function(req, res) {
 
   let combinedObfuscatorOption = {
     compact: submitData.transformOption.compact,
+    selfDefending: submitData.transformOption.selfDefending,
     controlFlowFlatteningThreshold: submitData.transformOption.controlFlowFlatteningThreshold,
     numbersToExpressions: submitData.transformOption.numbersToExpressions,
     simplify: submitData.transformOption.simplify,
@@ -196,7 +197,7 @@ app.post("/api/placeindex", function(req, res) {
     } else {
       console.log("Directory exists.");
       let allFilePath = getFiles("./public/_results_pkg_/" + submitData.pkgName);
-      console.log(allFilePath);
+      console.log("allFilePath", allFilePath);
       for (let i = 0; i < allFilePath.length; i++) {
         let cntPath = allFilePath[i], cntPathArray = cntPath.split("/"), cntDirPath = "";
         for (let j = 0; j < cntPathArray.length-1; j++) {
