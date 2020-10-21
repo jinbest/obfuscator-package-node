@@ -136,14 +136,6 @@ async function replaceIndexFile(pkgname, filename, replaceArray) {
 
   let someFile = 'public/_results_pkg_/' + pkgname + '/' + filename;
   try {
-    // if(fs.existsSync('public/_results_pkg_/' + pkgname + '/index.php')) {
-    //   console.log(`The file of "index.php" exists.`);
-    //   someFile = 'public/_results_pkg_/' + pkgname + '/index.php';
-    // } else {
-    //   console.log(`The file of "index.html" exists.`);
-    //   someFile = 'public/_results_pkg_/' + pkgname + '/index.html';
-    // }
-
     fs.readFile(someFile, 'utf8', function (err,data) {
       if (err) {
         return console.log(err);
@@ -157,7 +149,6 @@ async function replaceIndexFile(pkgname, filename, replaceArray) {
         if (err) return console.log(err);
       });
     });
-
   } catch (err) {
     console.error(err + " in replacement of index file");
   }  
@@ -176,14 +167,6 @@ async function removePathIndexFile(pkgName, filename, removePh) {
   
   let someFile = 'public/_results_pkg_/' + pkgName + '/' + filename;
   try {
-    // if(fs.existsSync('public/_results_pkg_/' + pkgName + '/index.php')) {
-    //   console.log(`The file of "index.php" exists.`);
-    //   someFile = 'public/_results_pkg_/' + pkgName + '/index.php';
-    // } else {
-    //   console.log(`The file of "index.html" exists.`);
-    //   someFile = 'public/_results_pkg_/' + pkgName + '/index.html';
-    // }
-
     fs.readFile(someFile, 'utf8', function (err,data) {
       if (err) {
         return console.log(err);
@@ -198,7 +181,6 @@ async function removePathIndexFile(pkgName, filename, removePh) {
         if (err) return console.log(err);
       });
     });
-
   } catch (err) {
     console.error(err + " in replacement of index file");
   } 
@@ -229,26 +211,6 @@ app.post("/api/placeindex", function(req, res) {
           });
         }        
       }
-      // try {
-      //   const arrayOfFiles = fs.readdirSync("./public/_results_pkg_/" + submitData.pkgName)
-      //   // console.log("arrayOfFiles\n", arrayOfFiles);
-      //   for (let i = 0; i < arrayOfFiles.length; i++) {
-      //     try {
-      //       let subArrayOfFiles = fs.readdirSync("./public/_results_pkg_/" + submitData.pkgName + "/" + arrayOfFiles[i]);
-      //       // console.log("subArrayOfFiles\n", arrayOfFiles[i], subArrayOfFiles);
-      //       if (subArrayOfFiles.length) {
-      //         fs.writeFile("./public/_results_pkg_/" + submitData.pkgName + "/" + arrayOfFiles[i] + "/index.php", '', function (err) {
-      //           if (err) throw err;
-      //           console.log('"index.php" is created inside of "' + arrayOfFiles[i] + '" folder successfully.');
-      //         });
-      //       }            
-      //     } catch (ee) {
-      //       console.log(ee);
-      //     }      
-      //   }
-      // } catch(e) {
-      //   console.log(e)
-      // }
     }
   });
   res.set("Content-Type", "application/json");
@@ -266,26 +228,6 @@ app.post("/api/remove-unreferred-files", function(req, res) {
       console.log("Directory exists.");
       let allFilePath = getFiles("./public/_results_pkg_/" + submitData.pkgName);
       removeUnReferredFiles(allFilePath, submitData);
-      // console.log("allFilePath", allFilePath);
-      // let testPath1 = './public/_results_pkg_/can_share/js/ext/FileSaver.js',
-      //     testPath2 = './public/_results_pkg_/can_share/js/camera.js';
-      // console.log(testPath1.includes('js/camera.js'));
-      // console.log(testPath2.includes('js/camera.js'));
-      // try {
-      //   const arrayOfFiles = fs.readdirSync("./public/_results_pkg_/" + submitData.pkgName);
-      //   console.log("arrayOfFiles\n", arrayOfFiles);
-      //   for (let i = 0; i < arrayOfFiles.length; i++) {
-      //     try {
-      //       let subArrayOfFiles = fs.readdirSync("./public/_results_pkg_/" + submitData.pkgName + "/" + arrayOfFiles[i]);
-      //       console.log("subArrayOfFiles\n", arrayOfFiles[i], subArrayOfFiles);
-                
-      //     } catch (ee) {
-      //       console.log(ee);
-      //     }      
-      //   }
-      // } catch(e) {
-      //   console.log(e)
-      // }
     }
   });
   res.set("Content-Type", "application/json");
