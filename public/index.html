@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JS-Obfuscator</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="css/index.css" />
+        <link rel="icon" href="" type="image/x-icon" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/javascript-obfuscator/dist/index.browser.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <h1 style="text-align: center;">
+            JS-FILES OBFUSCATOR
+        </h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h3><u>Select File:</u></h3>
+                    <div style="margin: auto;">
+                        <input type="file" id="indexfile" name="img" />
+                    </div>
+                    <div style="margin: auto; margin-top: 20px;">
+                        <ul id="listing"></ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div>
+                        <h3><u>Options:</u></h3>
+                        <div >
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="Combined" name="defaultExampleRadios">
+                                <label class="custom-control-label" for="Combined">Combined</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="Separated" name="defaultExampleRadios" checked>
+                                <label class="custom-control-label" for="Separated">Separated</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3><u>Package Name:</u></h3>
+                        <input type="text" id='pkgname' name='pkgname' value="can_share" />
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h3><u>Encryption:</u></h3>
+                    <div style="margin-top: 20px;">
+                        <button onclick="EncryptHandle()" type="button" class="btn btn-success">EncryptHandle</button>
+                    </div>
+                    <hr />
+                    <div style="margin-top: 20px;">
+                        <button onclick="placeIndex()" type="button" class="btn btn-success">place <b>index.php</b></button>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <button onclick="removeUnreferringFiles()" type="button" class="btn btn-danger">remove <b>un-referring file</b></button>
+                    </div>
+                </div>              
+            </div>
+            <br /><hr style="border-color: rgb(0, 204, 255);"/><br />
+            <div class="row">
+                <div class="col-sm-4">
+                    <h4><b>Strings Transformations</b></h4>
+                    <hr />
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="stringArray">
+                        <label class="custom-control-label" for="stringArray">String Array</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="rotateStringArray">
+                        <label class="custom-control-label" for="rotateStringArray">Rotate String Array</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="shuffleStringArray" checked>
+                        <label class="custom-control-label" for="shuffleStringArray">Shuffle String Array</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="splitStrings" checked>
+                        <label class="custom-control-label" for="splitStrings">Split Strings</label>
+                    </div>
+                    <br />
+                    <div class="custom-control">
+                        <label for="stringArrayThreshold">String Array Threshold</label>
+                        <input type="number" id="stringArrayThreshold" class="form-control" value="0.75" min="0" max="1" step="0.05">
+                    </div>
+                    <br />
+                    <div class="custom-control">
+                        <label for="stringArrayWrappersCount">String Array Wrappers Count</label>
+                        <input type="number" id="stringArrayWrappersCount" class="form-control" value="1" min="0">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h4><b>Other Transformations</b></h4>
+                    <hr />
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="compact" checked>
+                        <label class="custom-control-label" for="compact">Compact</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="simplify" checked>
+                        <label class="custom-control-label" for="simplify">Simplify</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="numbersToExpressions" checked>
+                        <label class="custom-control-label" for="numbersToExpressions">Numbers To Expressions</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="transformObjectKeys">
+                        <label class="custom-control-label" for="transformObjectKeys">Transform Object Keys</label>
+                    </div>
+                    <br />
+                    <div class="custom-control custom-checkbox">
+                        <label for="controlFlowFlatteningThreshold">Control Flow Flattening Threshold</label>
+                        <input type="number" id="controlFlowFlatteningThreshold" class="form-control" value="1" min="0" max="1" step="0.1">
+                    </div>
+                    <br />
+                    <div class="custom-control custom-checkbox">
+                        <label for="splitStringsChunkLenght">Split Strings Chunk Length</label>
+                        <input type="number" id="splitStringsChunkLenght" class="form-control" value="4" min="0">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h4><b>Identifiers Transformations</b></h4>
+                    <hr />
+                    <div class="form-group">
+                        <label for="stringArrayEncoding">String Array Encoding</label>
+                        <select class="form-control" id="stringArrayEncoding">
+                            <option value="none" selected>None</option>
+                            <option value="Base64">Base64</option>
+                            <option value="RC4">RC4</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <br /><hr style="border-color:  rgb(0, 204, 255);"/><br />
+        </div>
+        
+    </body>
+    <script src="js/index.js"></script>
+</html>

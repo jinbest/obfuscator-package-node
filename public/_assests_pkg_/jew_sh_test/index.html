@@ -1,0 +1,314 @@
+ <!DOCTYPE html>
+ <html>
+   <head>
+     <title>CamWeara - Jewelry Virtual Try On || Jewellery Tryon</title>
+     <meta charset="utf-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <link rel="stylesheet" href="css/tryon7.css" />
+     <link rel="stylesheet" href="css/pentagon.css" />
+     <link rel="stylesheet" href="css/lazy.css" />
+     <link rel="stylesheet" href="css/bootstrap.min.css"/>
+     <link rel="icon" href="img/images/logo.png" type="image/x-icon" />
+     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
+     <script src="js/ext/jquery-3.3.0.min.js"></script>
+     <script src="js/ext/bootstrap.min.js"></script>
+   </head>
+   <body oncontextmenu="return true;">
+      <!-- <div style="z-index: 10000; position: absolute;">
+        <div>        
+          <input type="file" id="fileUpload">    
+        </div>    
+        <div> 
+          <button onclick="s3upload()">Submit</button>
+        </div>     
+        <progress max=”100” value=”0”></progress>
+      </div> -->
+     <div class="body" id="body">
+       <div class="camera_div modal fade " id="camera_div" role="dialog">
+         <div class="loadingAnim" id="loadingAnim">
+           <div id="utm_newsletter_spinner123" class="spinner-main-wrap">
+             <div class="text-primary" style="color: #fff;">
+               <span id="process_txt">Please wait</span>
+             </div>
+             <div class="spinner1">
+               <div class="rect1"></div>
+               <div class="rect2"></div>
+               <div class="rect3"></div>
+               <div class="rect4"></div>
+               <div class="rect5"></div>
+             </div>
+           </div>
+         </div>
+         <!-- <div class="loader">Loading...</div> -->
+         <div class="maincamera" id="maincamera" style="width: 100%; height: 100%;">
+          <div id="videodiv">
+              <video id="inputVideo" autoplay="true" playsinline muted crossorigin="Anonymous"></video>
+          </div>
+           <div class="canvascontainer " id="canvascontainer">
+             <canvas
+               id="overlayVideo"
+             ></canvas>
+             <canvas
+               id="overlay"
+             ></canvas>
+             <canvas id="overlay2" class="animated"></canvas>
+             <canvas id="overlay3" class="animated"></canvas>
+           </div>
+
+           <p
+             id="nonecamera"
+             class="hide"
+             style="
+               position: absolute;
+               top: 45%;
+               left: 6%;
+               font-size: 18px;
+               color: grey;
+               font-weight: bolder;
+             "
+           >
+             Face could not be detected,<br />
+             Please make sure your eyes, mouth and ears are clearly visible.
+           </p>
+           <div class="Wishlist" onclick="showfavorite()">
+             <img
+               class="favourite_heart"
+               viewBox="0 0 32 29.6"
+               src="./img/images/Heart.png"
+             />
+           </div>
+           <div class="share_bttn_on hide" id="share_bttn_on" onclick="onShareClick()">
+             <img
+               style="width: 100%; height: 100%;"
+               src="img/images/share_on.png"
+             />
+           </div>
+
+           <div
+             id="logo"
+             class="hide"
+             style="
+               width: 120px;
+               height: 50px;
+               position: absolute;
+               left: 10px;
+               top: 10px;
+               cursor: pointer;
+               z-index: 5;
+             "
+           >
+             <img
+               crossorigin="Anonymous"
+               style="width: 100%; height: 100%;"
+               id="logoimg"
+               src="img/images/logo.png"
+               alt="The Scream"
+             />
+           </div>
+           <div id="pentagon" class="hide">
+             <div id="download_bttn" onclick="downSnapshot()">
+               <img
+                 style="width: 100%; height: 100%;"
+                 src="img/images/download1.png"
+               />
+             </div>
+             <div id="share_bttn" onclick="onShareClick()">
+               <img
+                 style="width: 100%; height: 100%;"
+                 src="img/images/share2.png"
+               />
+             </div>
+             <div id="back" onclick="hidePentagon()">
+               <img
+                 style="width: 100%; height: 100%;"
+                 src="img/images/back2.png"
+               />
+             </div>
+           </div>
+           <div id="menu" class="show" onclick="showPentagon()">
+             <img
+               style="width: 100%; height: 100%;"
+               src="img/images/camera.png"
+             />
+           </div>
+           <div
+             id="flipCamera"
+             class="hide"
+           >
+             <img
+               style="width: 100%; height: 100%;"
+               src="img/images/flipCamera.png"
+               onclick="flipCamera()"
+             />
+           </div>
+           <input
+             type="file"
+             id="fileUpload"
+             onchange="readURL(this);"
+             style="display: none;"
+             accept="image/jpg, image/jpeg, image/png"
+           />
+           <div id="upload_livebtn" class="show" onclick="upload_live()">
+            <img style="width: 100%; height: 100%;" src="img/images/upload.png">
+          </div>
+          <div id = "img_upload" class="hide">
+            <div id= "download_bttn_up" title="Download"
+                 onclick="downSnapshot()" >
+              <img style="width: 100%; height: 100%;" src="img/images/Download.png">
+            </div>
+            <div id="uploadbtn" title="Upload Pic" onclick="onRetriveUpload()">
+              <img style="width: 100%; height: 100%;" src="img/images/video-new.png">
+            </div>
+          </div>
+
+           <div id="mobile-init-buynow" class="hide" onclick="onBuyNowCurrentProduct()">
+		           <img class="mobile-init-buynow-class" src="img/images/buynow-new.png" />
+          </div>
+         </div>
+         <div class="favourite hide" id="favorite">
+           <div
+             style="
+               width: 100%;
+               height: 40px;
+               text-align: center;
+               border: 1px solid rgba(0, 0, 0, 0.1);
+               background-color: rgb(242, 242, 242);
+               border-radius: 0 20px 0 0;
+             "
+           >
+             <img
+               src="img/images/wishlist_new.png"
+               style="width: 35%; margin-top: 0px;"
+             />
+             <div
+               style="
+                 width: 25px;
+                 height: 25px;
+                 position: absolute;
+                 right: 5px;
+                 top: 6px;
+                 cursor: pointer;
+               "
+               onclick="hidefavorite()"
+             >
+               <img
+                 style="width: 100%; height: 100%;"
+                 src="img/images/close.png"
+               />
+             </div>
+           </div>
+           <div class="favourities" id="favourities"></div>
+         </div>
+         <div class="category" id="category" style="display: none;">
+           <div class="tab" id="tab">
+             <div id = "tempdiv" class="show"
+               style="
+                 width: fit-content;
+                 height: 59px;
+                 text-align: left;
+                 margin-top: -20px;
+                 cursor: pointer;
+                 display: flex;
+               "
+              >
+               <h3 id="category_title" onclick="SwipeToggle()"></h3>
+               <div
+                 id="brandlogo"
+               >
+                 <img
+                   crossorigin="Anonymous"
+                   style="width: 100%; height: 100%;"
+                   id="logoimg"
+                   src="img/images/logo.png"
+                   alt="The Scream"
+                 />
+               </div>
+             </div>
+             <div class="tabbtn" id="tabbtn">
+               <ul class="nav nav-tabs" style="display: flex; border-bottom: none; margin-bottom: 1px; align-items: center;">
+
+               </ul>
+             </div>
+           </div>
+           <div class="categories gallery" id="categories"></div>
+           <div class="needhelp" id="needhelp">
+
+           <img
+             src="./img/images/camweara1.png"
+             style="width: 40%; margin-top: 5px;"
+           />
+         </div>
+         </div>
+         <div class="Close" onclick="onBackClick()">
+           <img style="width: 100%; height: 100%;" src="img/images/close.png" />
+         </div>
+         <!-- <div class="needhelp" id="needhelp">
+
+           <img
+             src="./img/images/camweara1.png"
+             style="width: 100%; margin-top: 0em;"
+           />
+         </div> -->
+       </div>
+
+       <div id="viewdetail_modal" class="customizedModal">
+         <div class="customizedModal-content">
+           <span class="customClose" onclick="CloseCustomModal()">&times;</span>
+           <h4 id="viewdetailtitle_modal"></h4>
+           <div id="viewdetailbody_modal">
+             <p id="viewdetailtext_modal" class="hide_qr"></p>
+             <img src="" style="height: 150px;" id="viewdetailimage_modal" />
+           </div>
+         </div>
+       </div>
+     </div>
+     <script src="./js/ut_op.js"></script>
+     <script>
+       let utils = new Utils("errorMessage");
+       var set_int;
+       var value_b = false;
+       var isModelLoaded = false;
+       function isbrowsercheck() {
+         // IsPoseBrowser = true ;
+         value_b = true;
+         set_int = setInterval(function () {
+           try {
+             loadbrowser(value_b, set_int);
+           } catch (error) {
+             setTimeout(function () {
+               isbrowsercheck();
+             }, 0);
+           }
+         }, 1000);
+       }
+
+       utils.loadCV(isbrowsercheck);
+
+       var IMG_URL = "./img/jewelry/";
+       var earringImagePaths = [ "payal1&56.png", "drz8&60.png", "earring6&50.png", "BE11500014&38.png", "6992&35.png", "menan1&18.png"];
+        var necklaceImagePaths = ["necklace2&26&467.png", "necklace1&110&569.png"];
+        var necklaceSetImagePaths = ["IMG_20190728&158&646&IMG_20190728&50.png"];
+        var noseringPaths = ["GHCSNP-827_nosering&9.png"];
+       var tikkaPaths = [];
+       var pendantPaths = [];
+       var uniqueIds = ["0", "1", "2", "3", "4", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"];
+       var hostname = "jewelry_demo";
+
+       var product_arr = {
+         Earring: earringImagePaths,
+         Necklace: necklaceImagePaths,
+         NecklaceSet: necklaceSetImagePaths,
+         Nosering: noseringPaths,
+         Tikka: tikkaPaths,
+         Pendant: pendantPaths
+       };
+
+     </script>
+
+     <script src="js/camera.js"></script>
+     <script src="js/lz.js"></script>
+     <script src="js/tryon6.js"></script>
+     <script src="js/swiper.js"></script>
+     <script src="./js/ext/wgl_filter.js"></script>
+   </body>
+ </html>

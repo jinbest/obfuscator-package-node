@@ -1,0 +1,17 @@
+.tab-text {
+    padding: 0px 10px;
+    margin: 0px;
+    color: rgb(49, 49, 49);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: monospace;
+}
+
+.active-tab-text {
+    color: darkturquoise;
+}
+
+.chrome-mobile-text-tab {
+    font-size: 25px;
+    font-weight: bold;
+}
