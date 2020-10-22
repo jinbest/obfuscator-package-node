@@ -22,21 +22,26 @@ let replacement = [];
 
 app.post("/api/data", function(req, res) {
   let submitData = req.body;
-  console.log("submitData", submitData, __dirname);
+  replacement = [];
+  console.log("submitData", submitData, __dirname, replacement);
   let combinedData = '';
 
   let combinedObfuscatorOption = {
+    stringArray: submitData.transformOption.stringArray,
+    rotateStringArray: submitData.transformOption.rotateStringArray,
     compact: submitData.transformOption.compact,
     selfDefending: submitData.transformOption.selfDefending,
+    controlFlowFlattening: submitData.transformOption.controlFlowFlatteningThreshold > 0 ? true : false,
     controlFlowFlatteningThreshold: submitData.transformOption.controlFlowFlatteningThreshold,
     numbersToExpressions: submitData.transformOption.numbersToExpressions,
     simplify: submitData.transformOption.simplify,
     stringArrayThreshold: submitData.transformOption.stringArrayThreshold,
-    // stringArrayEncoding: 'rc4',
+    stringArrayEncoding: submitData.transformOption.stringArrayEncoding === "none" ? [] : [submitData.transformOption.stringArrayEncoding],
     splitStrings: submitData.transformOption.splitStrings,
     splitStringsChunkLenght: submitData.transformOption.splitStringsChunkLenght,
     shuffleStringArray: submitData.transformOption.shuffleStringArray,
-    controlFlowFlattening: true
+    stringArrayWrappersCount: submitData.transformOption.stringArrayWrappersCount,
+    transformObjectKeys: submitData.transformOption.transformObjectKeys,
   }
 
   // Copy all files in the selected Package from '_assests_pkg_' to '_results_pkg_'.
