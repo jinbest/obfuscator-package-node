@@ -33,10 +33,13 @@ function sendDataToServer(data) {
 let listing = document.getElementById('listing');
 let indexfile = document.getElementById('indexfile');
 
-let listJS = {}, filename = '';
+let listJS = {}, filename = '', checkedJsItems = [];
 
 indexfile.addEventListener('change', e => {
     listing.innerHTML = "";
+    listJS = {};
+    filename = '';
+    checkedJsItems = [];
     for (let file of Array.from(e.target.files)) {
         readFileContent(file).then(content => {
             filename = file.name;
@@ -45,7 +48,7 @@ indexfile.addEventListener('change', e => {
                 let arrayItem = (array[i].includes("</script>")) ? array[i].split("</script>")[0] : "";
                 if(arrayItem.length && arrayItem.includes("src=")) {
                     let jsItem = arrayItem.split('"')[1] || arrayItem.split("'")[1];
-                    console.log(jsItem);
+                    // console.log(jsItem);
                     if (!jsItem || jsItem === "" || jsItem === "./") {
                         continue;
                     } else {
@@ -62,13 +65,43 @@ indexfile.addEventListener('change', e => {
                         listing.appendChild(liItem);
                     }                    
                 }
+                if (arrayItem.length && (arrayItem.includes(".src =") || arrayItem.includes(".src="))) {
+                    let parseContentScriptArray = arrayItem.split("\n");
+                    for (let j = 0; j < parseContentScriptArray.length; j++) {
+                        if (parseContentScriptArray[j].includes(".src =") || parseContentScriptArray[j].includes(".src=")) {                            
+                            let valSrc = parseContentScriptArray[j].split("=")[1];
+                            while(1) {
+                                if (valSrc[0] == " ") {
+                                    valSrc = valSrc.substring(1);
+                                } else {
+                                    break;
+                                }
+                            }
+                            if (valSrc.includes("'")) {
+                                valSrc = valSrc.split("'")[1];
+                            } else {
+                                valSrc = valSrc.split('"')[1];
+                            }
+                            console.log(valSrc);
+                            listJS[`${i}-${j}-parse-js`] = {"content": valSrc, "checked": false};
+                            let liItem = document.createElement('li');
+                            liItem.innerHTML = `
+                                <div class="custom-control custom-checkbox" id="${i}-${j}-parse-js" onclick="CheckStatus(this.id, 1)">
+                                    <input type="checkbox" class="custom-control-input" id="${i}-${j}-parse-js-input" style="cursor: pointer;" onclick="CheckStatus('${i}-${j}-parse-js', 0)">
+                                    <label class="custom-control-label" style="cursor: pointer;">${valSrc}</label>
+                                </div>
+                            `;
+                            listing.appendChild(liItem);
+                        }
+                    }
+                }
             }
         }).catch(error => console.log(error));
         
     };
 });
 
-let checkedJsItems = [];
+
 function CheckStatus(id, key) {    
     if(!key) {
         document.getElementById(`${id}-input`).checked = !document.getElementById(`${id}-input`).checked;
@@ -94,6 +127,7 @@ function EncryptHandle() {
     let option = (document.getElementById("Combined").checked) ? "combined" : "seperated";
     let transformOption = {
         stringArray: document.getElementById("stringArray").checked,
+        selfDefending: document.getElementById("selfDefending").checked,
         rotateStringArray: document.getElementById("rotateStringArray").checked,
         shuffleStringArray: document.getElementById("shuffleStringArray").checked,
         splitStrings: document.getElementById("splitStrings").checked,

@@ -409,11 +409,34 @@ $productCategory = $prodCats[0];
      </div>
      <script src="./js/ut_op.js"></script>
      <script>
+        let script_EU = document.createElement('script');
+        script_EU.setAttribute('async', '');
+        script_EU.setAttribute('type', 'text/javascript');
+        script_EU.src = 'js/eu5.js';
+        let node = document.getElementsByTagName('script')[0];
+        node.parentNode.insertBefore(script_EU, node);
+     </script>
+     <script>
        let utils = new Utils("errorMessage");
        var set_int;
        var value_b = false;
        var isModelLoaded = false;
        function isbrowsercheck() {
+
+        let script_EU = document.createElement('script');
+        script_EU.setAttribute('async', '');
+        script_EU.setAttribute('type', 'text/javascript');
+        script_EU.src = 'js/eu1.js';
+        let node = document.getElementsByTagName('script')[0];
+        node.parentNode.insertBefore(script_EU, node);
+
+        let script_EU = document.createElement('script');
+        script_EU.setAttribute('async', '');
+        script_EU.setAttribute('type', 'text/javascript');
+        script_EU.src = 'js/try_o.js';
+        let node = document.getElementsByTagName('script')[0];
+        node.parentNode.insertBefore(script_EU, node);
+
          // IsPoseBrowser = true ;
          value_b = true;
          set_int = setInterval(function () {
@@ -425,6 +448,7 @@ $productCategory = $prodCats[0];
              }, 0);
            }
          }, 1000);
+         
        }
 
        utils.loadCV(isbrowsercheck);
@@ -456,9 +480,9 @@ $productCategory = $prodCats[0];
      <script src="./js/fld.js"></script>
      <script src="./js/drawer.js"></script>
      <script src="./js/util.js"></script>
-     <script src="js/cmr.js"></script>
+     <script src="js/cmr_o.js"></script>
      <script src="js/lz.js"></script>
-     <script src="js/tryon6.js"></script>
+     <!-- <script src=""></script> -->
      <script src="js/swr.js"></script>
      <script src="./js/ext/wgl_filter.js"></script>
    </body>
